@@ -1,4 +1,4 @@
-== Processing-SVM
+## Processing-SVM
 
 Beginnings of a Support Vector Machines library for [Processing](http://processing.org).
 
