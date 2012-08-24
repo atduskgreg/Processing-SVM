@@ -1,5 +1,7 @@
 import libsvm.*;
 
+SVM svmModel;
+
 String trainingDocuments[] = {
     "FREE NATIONAL TREASURE",     // Spam
     "FREE TV for EVERY visitor",   // Spam
@@ -85,11 +87,11 @@ void setup() {
     trainingVectors[i] = buildVector(trainingDocuments[i]);
   }
 
-  SVM svm = new SVM();
+  svmModel = new SVM();
   SVMProblem problem = new SVMProblem();
   problem.setNumFeatures(1);
   problem.setSampleData(labels, trainingVectors);
-  svm.train(problem);
+  svmModel.train(problem);
   
   int[][] testVectors = new int[testDocuments.length][1];
   for(int i = 0; i < testDocuments.length; i++){
@@ -98,11 +100,22 @@ void setup() {
   
   for(int i = 0; i < testDocuments.length; i++){
     println("testing: " + testDocuments[i] );
-    double score = svm.test(testVectors[i]); 
+    double score = svmModel.test(testVectors[i]); 
     println("result: " + score);
-  }
+  } 
 }
 
 void draw() {
+}
+
+void saveGlobalDictionary(){
+  String[] strings = new String[globalDictionary.size()];
+  strings = globalDictionary.toArray(strings);
+  saveStrings(dataPath("dictionary.txt"), strings);
+}
+
+void keyPressed(){
+  saveGlobalDictionary();
+  svmModel.saveModel("model.txt");
 }
 
