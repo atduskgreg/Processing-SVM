@@ -78,6 +78,7 @@ int[] buildVector(String input) {
 }
 
 void setup() {
+  size(500,500);
   buildGlobalDictionary();
 
   int[][] trainingVectors = new int[trainingDocuments.length][1];
@@ -104,6 +105,16 @@ void setup() {
 }
 
 void draw() {
+background(0);
+for (int i =0; i < testDocuments.length; i++) {
+    double score = model.test(buildVector(testDocuments[i]));
+    if(score == 0){
+      fill(0,255,0);
+    } else {
+      fill(255,0,0);
+    }
+    text(testDocuments[i] + " [score: "+score+"]", 10, 20*i + 20);
+  }
 }
 
 void saveGlobalDictionary(){
@@ -114,5 +125,5 @@ void saveGlobalDictionary(){
 
 void keyPressed(){
   saveGlobalDictionary();
-  svmModel.saveModel("model.txt");
+  model.saveModel("model.txt");
 }
