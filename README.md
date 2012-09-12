@@ -1,7 +1,7 @@
-## Processing-SVM
+# P-SVM: Support Vector Machines for Processing
 
-Beginnings of a Support Vector Machines library for [Processing](http://processing.org).
+This is a machine learning library for Processing that uses Support Vector Machines. It is based on the open source [LibSVM](http://www.csie.ntu.edu.tw/~cjlin/libsvm/) project.
 
-Support Vector Machines is a machine learning technique for classifying data based on a labeled training set. Eventually, this library will include conveniences for vectorizing text and image data, saving learned parameters for later use, etc. For now, it includes only a very thin wrapper around libsvm with some default parameters and an example of how to use it to classify text as spam/not spam. (The example is heavily based on [this blog post by Ilya Grigorik](http://www.igvita.com/2008/01/07/support-vector-machines-svm-in-ruby/)).
+It is currently in a pre-alpha stage. Examples and API are primitive, but functional. Look for more helpers and better examples in the coming weeks.
 
-Very early days. Being developed as part of the curriculum for [Makematics](http://makematics.com) at [NYU ITP](http://itp.nyu.edu). More soon.
+Download [here](https://github.com/downloads/atduskgreg/Processing-SVM/PSVM.zip) to install. See the examples that come with the library for basic training and loading usage.
