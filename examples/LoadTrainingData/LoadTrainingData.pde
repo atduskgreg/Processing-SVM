@@ -1,56 +1,34 @@
 import psvm.*;
 
 SVM model;
-String[] globalDictionary;
-
-String testDocuments[] = {
-  "FREE cash for gold!!!", 
-  "I love this show", 
-  "This is the funniest episode ever.", 
-  "Free Drugs TV SPAM SPAM SPAM",
-  "Stewie is the best."
-};
-
-
-void loadGlobalDictionary() {
-  globalDictionary = loadStrings(dataPath("dictionary.txt"));
-}
-
-int[] buildVector(String s) {
-  int[] result = new int[globalDictionary.length];
-
-  String words[] = split(s, ' ');
-
-  // normalize the words in the test string
-  for (int i = 0; i < words.length; i++) {
-    String word = words[i].toLowerCase();
-    words[i] = word.replaceAll("\\W", "");
-  }
-
-  for (int i = 0; i < globalDictionary.length; i++) {
-    if (Arrays.asList(words).contains(globalDictionary[i])) {
-      result[i] = 1;
-    } 
-    else {
-      result[i] = 0;
-    }
-  }
-  return result;
-}
 
 void setup() {
-  size(500, 500);
-  background(0);
-  loadGlobalDictionary();
+  size(500, 500);  
   model = new SVM(this);
-  model.loadModel("model.txt");
-  for (int i =0; i < testDocuments.length; i++) {
-    double score = model.test(buildVector(testDocuments[i]));
-    if(score == 0){
-      fill(0,255,0);
-    } else {
-      fill(255,0,0);
-    }
-    text(testDocuments[i] + " [score: "+score+"]", 10, 20*i + 20);
+  // load the model from a model file
+  // the second argument is how many features the problem has 
+  model.loadModel("model.txt",2);
+}
+
+void draw(){
+  background(255);
+
+  // scale the mouse point to 0-1
+  float[] p = new float[2];
+  p[0] = (float)mouseX/width;
+  p[1] = (float)mouseY/height;
+  
+  // test the point,
+  // convert the result to an int
+  // and set the fill color based on the result
+  int result = (int)model.test(p);
+  if(result == 1){
+    fill(255,0,0);
+  } else if(result == 2){
+    fill(0,255,0);
+  } else if(result == 3){
+    fill(0,0,255);
   }
+  
+  ellipse(mouseX, mouseY, 10, 10);
 }

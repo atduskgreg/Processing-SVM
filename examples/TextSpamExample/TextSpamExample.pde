@@ -7,22 +7,26 @@ String trainingDocuments[] = {
     "FREE TV for EVERY visitor",   // Spam
     "Peter and Stewie are hilarious", // OK
     "AS SEEN ON NATIONAL TV",      // SPAM
-    "FREE drugs",          // SPAM
+    "Buy Viagra Now!",          // SPAM
     "New episode rocks, Peter and Stewie are hilarious", // OK
-    "Peter is my fav!"        // OK
+    "Peter is my fav!",        // OK
+    "Buy Viagra",
+    //"LOVE Viagra Cialis TV!", // SPAM
+    //"Free viagra for you."
 };
 
 int labels[] = {
-  1, 1, 0, 1, 1, 0, 0
+  1, 1, 0, 1, 1, 0, 0//, 1, 1
 };
 
 String testDocuments[] = {
-    "FREE lotterry for the NATIONAL TREASURE !!!", // Spam
+    "FREE lotterry for the NATIONAL TREASURE!!!", // Spam
     "Stewie is hilarious",     // OK
-    "Poor Peter ... hilarious",    // OK
+    "Poor Peter...nhilarious",    // OK
     "I love this show",
     "Free gold just click HERE.",
-    "Best episode ever"
+    "Best episode ever",
+    "Buy Viagra?"
 };
 
 ArrayList<String> globalDictionary;

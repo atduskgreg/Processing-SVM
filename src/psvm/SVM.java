@@ -43,7 +43,15 @@ import libsvm.*;
 
 public class SVM {
 	public final static String VERSION = "##library.prettyVersion##";
-
+	
+	  public final static int LINEAR_KERNEL = svm_parameter.LINEAR;
+	  public final static int RBF_KERNEL = svm_parameter.RBF;
+	  public final static int POLY_KERNEL = svm_parameter.POLY;
+	  public final static int SIGMOID_KERNEL = svm_parameter.SIGMOID;
+	  
+	  public final static int C_SVC = svm_parameter.C_SVC;
+	  public final static int NU_SVC = svm_parameter.NU_SVC;
+	
 	  public SVMProblem svmProblem;
 	  
 	  public svm_parameter params;
@@ -73,12 +81,20 @@ public class SVM {
 	    params.weight = new double[0];
 	  }
 
+	  public void setKernelParameters(int svmType, int kernelType, int degree, float gamma, int c){
+		  params.svm_type = svmType;
+		  params.kernel_type = kernelType;
+		  params.degree = degree;
+		  params.gamma = gamma;
+		  params.C = c;
+	  }
+	  
 	  // NOTE: The model file 
-	  public void loadModel(String filename) {
+	  public void loadModel(String filename, int numFeatures) {
 	    try {
 	      model = svm.svm_load_model(parent.dataPath(filename));
 	      svmProblem = new SVMProblem();
-	      svmProblem.setNumFeatures(model.nr_class);
+	      svmProblem.setNumFeatures(numFeatures);
 	    } 
 	    catch(IOException e) {
 	      parent.println("[P-SVM] ERROR loading model. Is the model file in the data folder? " + e);
@@ -99,10 +115,31 @@ public class SVM {
 	  public void train(SVMProblem problem) {
 	    params.gamma = (float)1/problem.problem.l;
 	   // parent.println("gamma: " + params.gamma);
+		  //parent.
 	    model = svm.svm_train(problem.problem, params);   
 	    svmProblem = problem;
 	  }
 
+	  public double test(double[] testVector) {
+		    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
+		    for (int f = 0; f < svmProblem.getNumFeatures(); f++) {
+		      result[f] = new svm_node();
+		      result[f].index = f+1; 
+		      result[f].value = testVector[f];
+		    }
+		    return svm.svm_predict(model, result);
+	  }
+	  
+	  public double test(float[] testVector) {
+		    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
+		    for (int f = 0; f < svmProblem.getNumFeatures(); f++) {
+		      result[f] = new svm_node();
+		      result[f].index = f+1; 
+		      result[f].value = testVector[f];
+		    }
+		    return svm.svm_predict(model, result);
+		  }
+	  
 	  public double test(int[] testVector) {
 	    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
 	    for (int f = 0; f < svmProblem.getNumFeatures(); f++) {
