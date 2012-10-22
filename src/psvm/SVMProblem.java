@@ -39,7 +39,7 @@ public class SVMProblem {
 		    problem.l = sampleVector.length;
 		    problem.y = new double[problem.l];
 		    for (int i = 0; i < sampleVector.length; i ++) {
-		      for (int f = numFeatures-1; f < numFeatures; f++) {
+		      for (int f = 0; f < numFeatures; f++) {
 		        problem.x[i][f] = new svm_node();
 		        problem.x[i][f].index = f+1;
 		        problem.x[i][f].value = sampleVector[i][f];

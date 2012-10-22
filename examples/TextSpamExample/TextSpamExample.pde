@@ -12,11 +12,12 @@ String trainingDocuments[] = {
     "Peter is my fav!",        // OK
     "Buy Viagra",
     //"LOVE Viagra Cialis TV!", // SPAM
-    //"Free viagra for you."
+    "Free viagra for you."
+    //"Viagra"
 };
 
 int labels[] = {
-  1, 1, 0, 1, 1, 0, 0//, 1, 1
+  1, 1, 0, 1, 1, 0, 0, 1, 1
 };
 
 String testDocuments[] = {
@@ -26,7 +27,9 @@ String testDocuments[] = {
     "I love this show",
     "Free gold just click HERE.",
     "Best episode ever",
-    "Buy Viagra?"
+    "Buy Viagra",
+    "I love golden cats",
+    "FREE GOLD"
 };
 
 ArrayList<String> globalDictionary;
@@ -85,26 +88,27 @@ void setup() {
   size(500,500);
   buildGlobalDictionary();
 
-  int[][] trainingVectors = new int[trainingDocuments.length][1];
+  int[][] trainingVectors = new int[trainingDocuments.length][globalDictionary.size()];
   for(int i = 0; i < trainingDocuments.length; i++){
     trainingVectors[i] = buildVector(trainingDocuments[i]);
   }
 
+
   model = new SVM(this);
   SVMProblem problem = new SVMProblem();
-  problem.setNumFeatures(1);
+  problem.setNumFeatures(2);
   problem.setSampleData(labels, trainingVectors);
   model.train(problem);
   
-  int[][] testVectors = new int[testDocuments.length][1];
+  int[][] testVectors = new int[testDocuments.length][globalDictionary.size()];
   for(int i = 0; i < testDocuments.length; i++){
     testVectors[i] = buildVector(testDocuments[i]);
   }
   
   for(int i = 0; i < testDocuments.length; i++){
-    println("testing: " + testDocuments[i] );
+   // println("testing: " + testDocuments[i] );
     double score = model.test(testVectors[i]); 
-    println("result: " + score);
+    //println("result: " + score);
   } 
 }
 
