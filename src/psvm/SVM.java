@@ -114,20 +114,13 @@ public class SVM {
 
 	  public void train(SVMProblem problem) {
 	    params.gamma = (float)1/problem.problem.l;
+	    params.probability = 1;
+
 	   // parent.println("gamma: " + params.gamma);
 		  //parent.
 	    model = svm.svm_train(problem.problem, params);   
 	    svmProblem = problem;
 	  }
-	  
-	  public void trainWithProbability(SVMProblem problem) {
-		    params.gamma = (float)1/problem.problem.l;
-		    params.probability = 1;
-		   // parent.println("gamma: " + params.gamma);
-			  //parent.
-		    model = svm.svm_train(problem.problem, params);   
-		    svmProblem = problem;
-		  }	  
 
 	  public double test(double[] testVector) {
 		    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
@@ -147,9 +140,9 @@ public class SVM {
 		      result[f].value = testVector[f];
 		    }
 		    return svm.svm_predict(model, result);
-		  }
+	  }
 	  
-	  public double testWithProbability(float[] testVector, double[] estimates) {
+	  public double test(float[] testVector, double[] estimates) {
 		    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
 		    for (int f = 0; f < svmProblem.getNumFeatures(); f++) {
 		      result[f] = new svm_node();
@@ -158,7 +151,7 @@ public class SVM {
 		    }
 		    
 		    return svm.svm_predict_probability(model, result, estimates);
-		  }	  
+	  }	  
 	  
 	  public double test(int[] testVector) {
 	    svm_node[] result = new svm_node[svmProblem.getNumFeatures()];
