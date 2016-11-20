@@ -6,4 +6,4 @@ It is currently in an early stage. Examples work pretty reliably for 2D numerica
 
 Download [here](https://github.com/downloads/atduskgreg/Processing-SVM/PSVM.zip) to install. See the examples that come with the library for basic training and loading usage.
 
-See [Makematics.com/code/PSVM](http://makematics.com/code/PSVM) for more details.
+See [Makematics.com/code/psvm](http://makematics.com/code/psvm) for more details.
